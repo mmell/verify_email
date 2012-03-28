@@ -1,0 +1,30 @@
+<h1>Halfway There ...</h1>
+
+<p id="notice"><%= notice %></p>
+
+<h2>To complete the process, you need to find the Confirmation Email that we just
+sent you and follow the instructions contained there.</h2>
+
+<p>
+  <b>From:</b>
+  <%= @mailer.from %>
+</p>
+
+<p>
+  <b>Subject:</b>
+  <%= @mailer.subject %>
+</p>
+
+<p>
+  <b>To:</b>
+  <em>Hidden for your privacy</em>
+</p>
+
+<p>
+  <b>Expires:</b>
+  <%= @verify_email.expires %> (<%= ::VerifyEmail::VerifyEmail::ExpiresInSeconds %> minutes from now)
+</p>
+
+<h2>Resend Verification Email</h2>
+
+<%= render 'form' %>

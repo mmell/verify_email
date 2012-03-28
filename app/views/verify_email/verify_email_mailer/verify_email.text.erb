@@ -1,0 +1,13 @@
+Hello
+
+Click the link below to verify your email address (copy and paste it into your browser if it won't click).
+
+Thanks
+
+==
+
+<%= verify_verify_email_url(@verify_email.hash_key, :only_path => false) %>
+
+This link will only work properly one time.
+It will expire <%= @verify_email.expires.utc.to_s %>.
+The time now is <%= Time.now.utc %>.

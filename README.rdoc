@@ -1,0 +1,46 @@
+= VerifyEmail
+
+== Installation
+=== Set up the Gemfile
+Include the CommunityResolver gem in your Rails application Gemfile:
+    gem 'verify_email', :git => 'git://github.com/mmell/verify_email.git'
+
+=== Add the table to your database:
+    rake verify_email:install:migrations
+    rake db:migrate
+
+=== Add the route
+In your Rails application, add a route
+    mount VerifyEmail::Engine => "/emails"
+then the url will be http://0.0.0.0:3000/emails/verify_email
+
+=== Create an initializer:
+    # config/initializers/verify_email_gem.rb
+    module VerifyEmail
+      From = 'do-not-reply@example.com'
+    end
+All verification emails will contain a From header with this value. There is no
+facility to configure different From addresses for individual users or workflows.
+
+=== Set a default host for urls in email messages in config/application.rb
+
+    config.action_mailer.default_url_options = { :host => "example.com" }
+
+== To verify a user's email address
+
+In the controller action that wants to verify emails generate a url to redirect to
+once the process has succeeded;
+
+    continue_to = url_for(:only_path => false)
+Then redirect the user to the VerifyEmail route:
+    redirect_to(new_verify_email_path(:continue_to => continue_to))
+
+The gem will present a form in the main Rails application layout asking the user
+to submit their email address. A valid email submission will route to a page
+instructing the user to retrieve the verification email message and with an
+opportunity to submit a new email or retry the existing email address.
+
+This project was originally available in the vendor/plugins of the Linksafe Ibroker
+on [Soureforge](http://linksafe.svn.sourceforge.net/viewvc/linksafe/rails/ibroker/trunk/vendor/plugins/verify_email)
+
+This project is released under the MIT-LICENSE.
